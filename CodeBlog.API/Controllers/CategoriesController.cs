@@ -17,7 +17,7 @@ namespace CodeBlog.API.Controllers
         {
             this.categoryRepository = categoryRepository;
         }
-        // GET: api/categories
+
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
         {
@@ -38,6 +38,26 @@ namespace CodeBlog.API.Controllers
                 URLHandle = category.URLHandle
             };
 
+            return Ok(response);
+        }
+
+        // GET: https://localhost:7133/api/Categories
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var categories = await categoryRepository.GetAllAsync();
+
+            // Map Domain Model to DTO
+            var response = new List<CategoryDto>();
+            foreach (var category in categories)
+            {
+                response.Add(new CategoryDto
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    URLHandle = category.URLHandle
+                });
+            }
             return Ok(response);
         }
     }
