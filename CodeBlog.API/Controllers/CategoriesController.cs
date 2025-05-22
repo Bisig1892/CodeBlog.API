@@ -1,6 +1,7 @@
 ﻿using CodeBlog.API.Data;
 using CodeBlog.API.Models.Domain;
 using CodeBlog.API.Models.DTO;
+using CodeBlog.API.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,10 @@ namespace CodeBlog.API.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext dbContext;
-
-        public CategoriesController(ApplicationDbContext dbContext)
+        private readonly ICategoryRepository categoryRepository;
+        public CategoriesController(ICategoryRepository categoryRepository)
         {
-            this.dbContext = dbContext;
-            // Constructor logic (if any)
+            this.categoryRepository = categoryRepository;
         }
         // GET: api/categories
         [HttpPost]
@@ -29,8 +28,7 @@ namespace CodeBlog.API.Controllers
                 URLHandle = request.URLHandle
             };
 
-            await dbContext.Categories.AddAsync(category);
-            await dbContext.SaveChangesAsync();
+            await categoryRepository.CreateAsync(category);
 
             // Domain model to DTO
             var response = new CategoryDto
