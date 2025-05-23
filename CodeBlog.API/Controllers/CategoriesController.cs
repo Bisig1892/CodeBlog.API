@@ -19,7 +19,7 @@ namespace CodeBlog.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
             // Map DTO to Domain Model
             var category = new Category
@@ -58,6 +58,28 @@ namespace CodeBlog.API.Controllers
                     URLHandle = category.URLHandle
                 });
             }
+            return Ok(response);
+        }
+
+        // GET: https://localhost:7133/api/Categories/{id}
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetCategoryId([FromRoute]Guid id) 
+        {
+            var existingCategory = await categoryRepository.GetById(id);
+
+            if (existingCategory is null)
+            {
+                return NotFound();
+            }
+            // Map Domain Model to DTO
+            var response = new CategoryDto
+            {
+                Id = existingCategory.Id,
+                Name = existingCategory.Name,
+                URLHandle = existingCategory.URLHandle
+            };
+
             return Ok(response);
         }
     }
