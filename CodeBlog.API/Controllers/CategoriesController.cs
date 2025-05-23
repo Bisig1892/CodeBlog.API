@@ -82,5 +82,36 @@ namespace CodeBlog.API.Controllers
 
             return Ok(response);
         }
+
+        // PUT: https://localhost:7133/api/Categories/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDto request)
+        {
+            // Convert DTO to Domain Model
+            var category = new Category
+            {
+                Id = id,
+                Name = request.Name,
+                URLHandle = request.URLHandle
+            };
+
+            category = await categoryRepository.UpdateAsync(category);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            // Convert Domain model to DTO
+            var response = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                URLHandle = category.URLHandle
+            };
+
+            return Ok(response);
+        }
     }
 }
