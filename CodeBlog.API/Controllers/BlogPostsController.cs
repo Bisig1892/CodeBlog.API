@@ -12,15 +12,17 @@ namespace CodeBlog.API.Controllers
     public class BlogPostsController : ControllerBase
     {
         private readonly IBlogPostRepository blogPostRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public BlogPostsController(IBlogPostRepository blogPostRepository)
+        public BlogPostsController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository)
         {
             this.blogPostRepository = blogPostRepository;
+            this.categoryRepository = categoryRepository;
         }
 
         // POST: {apibaseurl}/api/blogposts
         [HttpPost]
-        public async Task<IActionResult> CreateBlogPost(CreateBlogPostRequestDto request)
+        public async Task<IActionResult> CreateBlogPost([FromBody]CreateBlogPostRequestDto request)
         {
             // Convert DTO to Domain
             var blogPost = new BlogPost
@@ -32,8 +34,18 @@ namespace CodeBlog.API.Controllers
                 URLHandle = request.URLHandle,
                 PublishedDate = request.PublishedDate,
                 Author = request.Author,
-                IsVisible = request.IsVisible
+                IsVisible = request.IsVisible,
+                Categories = new List<Category>()
             };
+
+            foreach (var categoryGuid in request.Categories)
+            {
+                var existingCategory = await categoryRepository.GetById(categoryGuid);
+                if (existingCategory != null)
+                {
+                    blogPost.Categories.Add(existingCategory);
+                }
+            }
 
             blogPost = await blogPostRepository.CreateAsync(blogPost);
 
@@ -48,7 +60,14 @@ namespace CodeBlog.API.Controllers
                 URLHandle = blogPost.URLHandle,
                 PublishedDate = blogPost.PublishedDate,
                 Author = blogPost.Author,
-                IsVisible = blogPost.IsVisible
+                IsVisible = blogPost.IsVisible,
+                Categories = blogPost.Categories.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    URLHandle = c.URLHandle
+                }).ToList()
+
             };
 
             return Ok(response);
