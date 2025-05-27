@@ -53,5 +53,33 @@ namespace CodeBlog.API.Controllers
 
             return Ok(response);
         }
+
+        // GET: {apibaseurl}/api/blogposts
+        [HttpGet]
+        public async Task<IActionResult> GetAllBlogPosts()
+        {
+           var blogposts =  await blogPostRepository.GetAllAsync();
+
+            // Convert Domain Model to DTO
+            var response = new List<BlogPostDto>();
+
+            foreach (var blogPost in blogposts)
+            {
+                response.Add(new BlogPostDto
+                {
+                    Id = blogPost.Id,
+                    Title = blogPost.Title,
+                    ShortDescription = blogPost.ShortDescription,
+                    Content = blogPost.Content,
+                    FeaturedImageURL = blogPost.FeaturedImageURL,
+                    URLHandle = blogPost.URLHandle,
+                    PublishedDate = blogPost.PublishedDate,
+                    Author = blogPost.Author,
+                    IsVisible = blogPost.IsVisible
+                });
+            }
+
+            return Ok(response);
+        }
     }
 }

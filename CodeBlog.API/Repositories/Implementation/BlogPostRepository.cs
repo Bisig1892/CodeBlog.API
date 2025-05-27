@@ -1,6 +1,7 @@
 ﻿using CodeBlog.API.Data;
 using CodeBlog.API.Models.Domain;
 using CodeBlog.API.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeBlog.API.Repositories.Implementation
 {
@@ -19,6 +20,11 @@ namespace CodeBlog.API.Repositories.Implementation
             await dbContext.SaveChangesAsync();
             
             return blogPost;
+        }
+
+        public async Task<IEnumerable<BlogPost>> GetAllAsync()
+        {
+            return await dbContext.BlogPosts.ToListAsync();
         }
     }
 }
