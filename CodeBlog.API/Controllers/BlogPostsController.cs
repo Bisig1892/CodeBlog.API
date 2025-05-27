@@ -94,7 +94,13 @@ namespace CodeBlog.API.Controllers
                     URLHandle = blogPost.URLHandle,
                     PublishedDate = blogPost.PublishedDate,
                     Author = blogPost.Author,
-                    IsVisible = blogPost.IsVisible
+                    IsVisible = blogPost.IsVisible,
+                    Categories = blogPost.Categories.Select(c => new CategoryDto
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        URLHandle = c.URLHandle
+                    }).ToList()
                 });
             }
 
