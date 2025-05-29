@@ -7,5 +7,7 @@ namespace CodeBlog.API.Repositories.Interface
         Task<BlogPost> CreateAsync(BlogPost blogPost);
 
         Task<IEnumerable<BlogPost>> GetAllAsync();
+
+        Task<BlogPost?> GetByIdAsync(Guid id);
     }
 }

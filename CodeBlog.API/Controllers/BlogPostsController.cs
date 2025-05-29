@@ -22,7 +22,7 @@ namespace CodeBlog.API.Controllers
 
         // POST: {apibaseurl}/api/blogposts
         [HttpPost]
-        public async Task<IActionResult> CreateBlogPost([FromBody]CreateBlogPostRequestDto request)
+        public async Task<IActionResult> CreateBlogPost([FromBody] CreateBlogPostRequestDto request)
         {
             // Convert DTO to Domain
             var blogPost = new BlogPost
@@ -77,7 +77,7 @@ namespace CodeBlog.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBlogPosts()
         {
-           var blogposts =  await blogPostRepository.GetAllAsync();
+            var blogposts = await blogPostRepository.GetAllAsync();
 
             // Convert Domain Model to DTO
             var response = new List<BlogPostDto>();
@@ -105,6 +105,39 @@ namespace CodeBlog.API.Controllers
             }
 
             return Ok(response);
+        }
+
+        // GET: {apibaseurl}/api/blogposts/{id}
+        [HttpGet]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> GetBlogPostById([FromRoute] Guid id)
+        {
+            var blogPost = await blogPostRepository.GetByIdAsync(id);
+            if (blogPost == null)
+            {
+                return NotFound();
+            }
+            // Convert Domain Model to DTO
+            var response = new BlogPostDto
+            {
+                Id = blogPost.Id,
+                Title = blogPost.Title,
+                ShortDescription = blogPost.ShortDescription,
+                Content = blogPost.Content,
+                FeaturedImageURL = blogPost.FeaturedImageURL,
+                URLHandle = blogPost.URLHandle,
+                PublishedDate = blogPost.PublishedDate,
+                Author = blogPost.Author,
+                IsVisible = blogPost.IsVisible,
+                Categories = blogPost.Categories.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    URLHandle = c.URLHandle
+                }).ToList()
+            };
+            return Ok(response);
+
         }
     }
 }
