@@ -200,5 +200,34 @@ namespace CodeBlog.API.Controllers
 
             return Ok(response);
         }
+
+        // DELETE: {apibaseurl}/api/blogposts/{id}
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteBlogPostById([FromRoute] Guid id)
+        {
+            var deleted = await blogPostRepository.DeleteAsync(id);
+
+            if (deleted == null)
+            {
+                return NotFound();
+            }
+
+            // Convert Domain Model back to DTO
+            var response = new BlogPostDto
+            {
+                Id = deleted.Id,
+                Title = deleted.Title,
+                ShortDescription = deleted.ShortDescription,
+                Content = deleted.Content,
+                FeaturedImageURL = deleted.FeaturedImageURL,
+                URLHandle = deleted.URLHandle,
+                PublishedDate = deleted.PublishedDate,
+                Author = deleted.Author,
+                IsVisible = deleted.IsVisible
+            };
+
+            return Ok(response);
+        }
     }
 }
