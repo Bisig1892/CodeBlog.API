@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeBlog.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250531193720_Adding BlogImage Domain Model")]
+    [Migration("20250601181424_Adding BlogImage Domain Model")]
     partial class AddingBlogImageDomainModel
     {
         /// <inheritdoc />
