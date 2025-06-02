@@ -20,7 +20,7 @@ namespace CodeBlog.API.Controllers
 
         // POST: {apibaseurl}/api/images
         [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile file, string fileName, string title)
+        public async Task<IActionResult> UploadImage(IFormFile file,[FromForm] string fileName,[FromForm] string title)
         {
             ValidateFileUpload(file);
 
@@ -64,7 +64,7 @@ namespace CodeBlog.API.Controllers
             }
             if (file.Length > 10485760) // 10 MB limit
             {
-                ModelState.AddModelError("file", "File size exceeds the maximum limit of 5 MB.");
+                ModelState.AddModelError("file", "File size exceeds the maximum limit of 10 MB.");
             }
         }
 
