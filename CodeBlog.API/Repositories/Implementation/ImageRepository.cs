@@ -1,6 +1,7 @@
 ﻿using CodeBlog.API.Data;
 using CodeBlog.API.Models.Domain;
 using CodeBlog.API.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeBlog.API.Repositories.Implementation
 {
@@ -15,6 +16,12 @@ namespace CodeBlog.API.Repositories.Implementation
             this.webHostEnvironment = webHostEnvironment;
             this.httpContextAccessor = httpContextAccessor;
             this.dbContext = dbContext;
+        }
+
+        public async Task<IEnumerable<BlogImage>> GetAllImages()
+        {
+            // Get all images from the database
+            return await dbContext.BlogImages.ToListAsync();
         }
 
         public async Task<BlogImage> Upload(IFormFile file, BlogImage blogImage)

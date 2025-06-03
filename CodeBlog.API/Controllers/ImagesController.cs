@@ -18,6 +18,31 @@ namespace CodeBlog.API.Controllers
             this.imageRepository = imageRepository;
         }
 
+        // GET: {apibaseurl}/api/images
+        [HttpGet]
+        public async Task<IActionResult> GetAllImages()
+        {
+            // Call image repository to get all images
+            var images = await imageRepository.GetAllImages();
+
+            // Convert Domain Models to DTOs
+            var response = new List<BlogImageDto>();
+            foreach (var image in images)
+            {
+                response.Add(new BlogImageDto
+                {
+                    Id = image.Id,
+                    FileName = image.FileName,
+                    FileExtension = image.FileExtension,
+                    Title = image.Title,
+                    DateCreated = image.DateCreated,
+                    Url = image.Url
+                });
+            }
+
+            return Ok(response);
+        }
+
         // POST: {apibaseurl}/api/images
         [HttpPost]
         public async Task<IActionResult> UploadImage(IFormFile file,[FromForm] string fileName,[FromForm] string title)
