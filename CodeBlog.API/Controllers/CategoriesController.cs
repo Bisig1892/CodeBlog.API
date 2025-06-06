@@ -25,7 +25,7 @@ namespace CodeBlog.API.Controllers
             var category = new Category
             {
                 Name = request.Name,
-                URLHandle = request.URLHandle
+                UrlHandle = request.URLHandle
             };
 
             await categoryRepository.CreateAsync(category);
@@ -35,7 +35,7 @@ namespace CodeBlog.API.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                URLHandle = category.URLHandle
+                UrlHandle = category.UrlHandle
             };
 
             return Ok(response);
@@ -55,7 +55,7 @@ namespace CodeBlog.API.Controllers
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    URLHandle = category.URLHandle
+                    UrlHandle = category.UrlHandle
                 });
             }
             return Ok(response);
@@ -77,7 +77,7 @@ namespace CodeBlog.API.Controllers
             {
                 Id = existingCategory.Id,
                 Name = existingCategory.Name,
-                URLHandle = existingCategory.URLHandle
+                UrlHandle = existingCategory.UrlHandle
             };
 
             return Ok(response);
@@ -93,7 +93,7 @@ namespace CodeBlog.API.Controllers
             {
                 Id = id,
                 Name = request.Name,
-                URLHandle = request.URLHandle
+                UrlHandle = request.URLHandle
             };
 
             category = await categoryRepository.UpdateAsync(category);
@@ -108,7 +108,7 @@ namespace CodeBlog.API.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                URLHandle = category.URLHandle
+                UrlHandle = category.UrlHandle
             };
 
             return Ok(response);
@@ -131,7 +131,7 @@ namespace CodeBlog.API.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                URLHandle = category.URLHandle
+                UrlHandle = category.UrlHandle
             };
 
             return Ok(response);

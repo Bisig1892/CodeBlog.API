@@ -30,8 +30,8 @@ namespace CodeBlog.API.Controllers
                 Title = request.Title,
                 ShortDescription = request.ShortDescription,
                 Content = request.Content,
-                FeaturedImageURL = request.FeaturedImageURL,
-                URLHandle = request.URLHandle,
+                FeaturedImageUrl = request.FeaturedImageUrl,
+                UrlHandle = request.UrlHandle,
                 PublishedDate = request.PublishedDate,
                 Author = request.Author,
                 IsVisible = request.IsVisible,
@@ -56,8 +56,8 @@ namespace CodeBlog.API.Controllers
                 Title = blogPost.Title,
                 ShortDescription = blogPost.ShortDescription,
                 Content = blogPost.Content,
-                FeaturedImageURL = blogPost.FeaturedImageURL,
-                URLHandle = blogPost.URLHandle,
+                FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                UrlHandle = blogPost.UrlHandle,
                 PublishedDate = blogPost.PublishedDate,
                 Author = blogPost.Author,
                 IsVisible = blogPost.IsVisible,
@@ -65,7 +65,7 @@ namespace CodeBlog.API.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    URLHandle = c.URLHandle
+                    UrlHandle = c.UrlHandle
                 }).ToList()
 
             };
@@ -90,8 +90,8 @@ namespace CodeBlog.API.Controllers
                     Title = blogPost.Title,
                     ShortDescription = blogPost.ShortDescription,
                     Content = blogPost.Content,
-                    FeaturedImageURL = blogPost.FeaturedImageURL,
-                    URLHandle = blogPost.URLHandle,
+                    FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                    UrlHandle = blogPost.UrlHandle,
                     PublishedDate = blogPost.PublishedDate,
                     Author = blogPost.Author,
                     IsVisible = blogPost.IsVisible,
@@ -99,7 +99,7 @@ namespace CodeBlog.API.Controllers
                     {
                         Id = c.Id,
                         Name = c.Name,
-                        URLHandle = c.URLHandle
+                        UrlHandle = c.UrlHandle
                     }).ToList()
                 });
             }
@@ -124,8 +124,8 @@ namespace CodeBlog.API.Controllers
                 Title = blogPost.Title,
                 ShortDescription = blogPost.ShortDescription,
                 Content = blogPost.Content,
-                FeaturedImageURL = blogPost.FeaturedImageURL,
-                URLHandle = blogPost.URLHandle,
+                FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                UrlHandle = blogPost.UrlHandle,
                 PublishedDate = blogPost.PublishedDate,
                 Author = blogPost.Author,
                 IsVisible = blogPost.IsVisible,
@@ -133,7 +133,7 @@ namespace CodeBlog.API.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    URLHandle = c.URLHandle
+                    UrlHandle = c.UrlHandle
                 }).ToList()
             };
             return Ok(response);
@@ -151,8 +151,8 @@ namespace CodeBlog.API.Controllers
                 Title = request.Title,
                 ShortDescription = request.ShortDescription,
                 Content = request.Content,
-                FeaturedImageURL = request.FeaturedImageURL,
-                URLHandle = request.URLHandle,
+                FeaturedImageUrl = request.FeaturedImageUrl,
+                UrlHandle = request.UrlHandle,
                 PublishedDate = request.PublishedDate,
                 Author = request.Author,
                 IsVisible = request.IsVisible,
@@ -185,8 +185,8 @@ namespace CodeBlog.API.Controllers
                 Title = updatedBlogPost.Title,
                 ShortDescription = updatedBlogPost.ShortDescription,
                 Content = updatedBlogPost.Content,
-                FeaturedImageURL = updatedBlogPost.FeaturedImageURL,
-                URLHandle = updatedBlogPost.URLHandle,
+                FeaturedImageUrl = updatedBlogPost.FeaturedImageUrl,
+                UrlHandle = updatedBlogPost.UrlHandle,
                 PublishedDate = updatedBlogPost.PublishedDate,
                 Author = updatedBlogPost.Author,
                 IsVisible = updatedBlogPost.IsVisible,
@@ -194,7 +194,7 @@ namespace CodeBlog.API.Controllers
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    URLHandle = c.URLHandle
+                    UrlHandle = c.UrlHandle
                 }).ToList()
             };
 
@@ -220,8 +220,8 @@ namespace CodeBlog.API.Controllers
                 Title = deleted.Title,
                 ShortDescription = deleted.ShortDescription,
                 Content = deleted.Content,
-                FeaturedImageURL = deleted.FeaturedImageURL,
-                URLHandle = deleted.URLHandle,
+                FeaturedImageUrl = deleted.FeaturedImageUrl,
+                UrlHandle = deleted.UrlHandle,
                 PublishedDate = deleted.PublishedDate,
                 Author = deleted.Author,
                 IsVisible = deleted.IsVisible
