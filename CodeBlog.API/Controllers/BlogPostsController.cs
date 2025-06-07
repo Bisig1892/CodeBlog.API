@@ -139,6 +139,39 @@ namespace CodeBlog.API.Controllers
             return Ok(response);
         }
 
+        // GET {apibaseurl}/api/blogposts/urlHandle
+        [HttpGet]
+        [Route("{urlHandle}")]
+        public async Task<IActionResult> GetBlogPostByUrlHandle([FromRoute] string urlHandle)
+        {
+            // Get blog post details from repository
+            var blogpost = await blogPostRepository.GetByUrlHandleAsync(urlHandle);
+            if (blogpost == null)
+            {
+                return NotFound();
+            }
+            // Convert Domain Model to DTO
+            var response = new BlogPostDto
+            {
+                Id = blogpost.Id,
+                Title = blogpost.Title,
+                ShortDescription = blogpost.ShortDescription,
+                Content = blogpost.Content,
+                FeaturedImageUrl = blogpost.FeaturedImageUrl,
+                UrlHandle = blogpost.UrlHandle,
+                PublishedDate = blogpost.PublishedDate,
+                Author = blogpost.Author,
+                IsVisible = blogpost.IsVisible,
+                Categories = blogpost.Categories.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    UrlHandle = c.UrlHandle
+                }).ToList()
+            };
+            return Ok(response);
+        }
+
         // PUT: {apibaseurl}/api/blogposts/{id}
         [HttpPut]
         [Route("{id:Guid}")]
