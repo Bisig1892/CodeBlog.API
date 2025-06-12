@@ -61,10 +61,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var hasher = new PasswordHasher<IdentityUser>();
-var hash = hasher.HashPassword(null!, "Admin@123");
-Console.WriteLine(hash);
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

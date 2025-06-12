@@ -16,6 +16,36 @@ namespace CodeBlog.API.Controllers
             this.userManager = userManager;
         }
 
+        // POST: {apibaseurl}/api/auth/login
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+        {
+           var identityUser = await userManager.FindByEmailAsync(request.Email?.Trim());
+            if (identityUser is not null)
+            {
+                // Check Password
+                var checkPassordResult = await userManager.CheckPasswordAsync(identityUser, request.Password);
+
+                if (checkPassordResult)
+                {
+                    var roles = await userManager.GetRolesAsync(identityUser);
+                    // Generate Token
+                    var response = new LoginResponseDto()
+                    {
+                        Email = request.Email,
+                        Roles = roles.ToList(),
+                        Token = "TOKEN"
+                    };
+                    return Ok(response);
+                }
+            }
+            ModelState.AddModelError("", "Email or Password is incorrect.");
+
+            return ValidationProblem(ModelState);
+        }
+
+
         // POST: {apibaseurl}/api/auth/register
         [HttpPost]
         [Route("register")]
