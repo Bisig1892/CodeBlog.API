@@ -1,4 +1,5 @@
 ﻿using CodeBlog.API.Models.DTO;
+using CodeBlog.API.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace CodeBlog.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
         // POST: {apibaseurl}/api/auth/login
@@ -21,7 +24,7 @@ namespace CodeBlog.API.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-           var identityUser = await userManager.FindByEmailAsync(request.Email?.Trim());
+           var identityUser = await userManager.FindByEmailAsync(request.Email.Trim());
             if (identityUser is not null)
             {
                 // Check Password
@@ -30,12 +33,15 @@ namespace CodeBlog.API.Controllers
                 if (checkPassordResult)
                 {
                     var roles = await userManager.GetRolesAsync(identityUser);
+
                     // Generate Token
+                    var jwtToken = tokenRepository.CreateJwtToken(identityUser, roles.ToList());
+
                     var response = new LoginResponseDto()
                     {
                         Email = request.Email,
                         Roles = roles.ToList(),
-                        Token = "TOKEN"
+                        Token = jwtToken
                     };
                     return Ok(response);
                 }
