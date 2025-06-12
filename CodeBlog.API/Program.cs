@@ -1,4 +1,5 @@
 using CodeBlog.API.Data;
+using CodeBlog.API.Models.Domain;
 using CodeBlog.API.Repositories.Implementation;
 using CodeBlog.API.Repositories.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,14 +35,14 @@ builder.Services.AddIdentityCore<IdentityUser>()
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
     options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 8;
-    options.Password.RequiredUniqueChars = 1;
+    options.Password.RequiredLength = 6;
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -59,6 +60,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
+
+var hasher = new PasswordHasher<IdentityUser>();
+var hash = hasher.HashPassword(null!, "Admin@123");
+Console.WriteLine(hash);
 
 var app = builder.Build();
 
