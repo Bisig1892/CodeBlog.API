@@ -20,7 +20,7 @@ namespace CodeBlog.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
             // Map DTO to Domain Model
@@ -43,11 +43,11 @@ namespace CodeBlog.API.Controllers
             return Ok(response);
         }
 
-        // GET: https://localhost:7133/api/Categories
+        // GET: https://localhost:7133/api/Categories?query=csharp
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
         {
-            var categories = await categoryRepository.GetAllAsync();
+            var categories = await categoryRepository.GetAllAsync(query);
 
             // Map Domain Model to DTO
             var response = new List<CategoryDto>();
