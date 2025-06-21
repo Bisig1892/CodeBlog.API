@@ -145,5 +145,15 @@ namespace CodeBlog.API.Controllers
 
             return Ok(response);
         }
+
+        // GET https://localhost:7133/api/Categories/count
+        [HttpGet]
+        [Route("count")]
+        //[Authorize(Roles = "Writer")]
+        public async Task<IActionResult> GetCategoryCount()
+        {
+            var count = await categoryRepository.GetCount();
+            return Ok(count);
+        }
     }
 }
